@@ -1,0 +1,185 @@
+{
+    "P0": {
+        "num_operations": 7, 
+        "o0": {
+            "op_index": 0, 
+            "pnum": 0, 
+            "size": 320, 
+            "type": "M"
+        }, 
+        "o1": {
+            "op_index": 1, 
+            "pnum": 0, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o2": {
+            "op_index": 2, 
+            "pnum": 0, 
+            "size": 288, 
+            "type": "M"
+        }, 
+        "o3": {
+            "op_index": 3, 
+            "pnum": 0, 
+            "size": 304, 
+            "type": "M"
+        }, 
+        "o4": {
+            "op_index": 4, 
+            "pnum": 0, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o5": {
+            "op_index": 5, 
+            "pnum": 0, 
+            "size": 320, 
+            "type": "M"
+        }, 
+        "o6": {
+            "op_index": 6, 
+            "pnum": 0, 
+            "size": 288, 
+            "type": "M"
+        }
+    }, 
+    "P1": {
+        "num_operations": 6, 
+        "o0": {
+            "op_index": 0, 
+            "pnum": 1, 
+            "size": 288, 
+            "type": "M"
+        }, 
+        "o1": {
+            "index": 3, 
+            "op_index": 1, 
+            "pnum": 1, 
+            "target": "P0", 
+            "type": "F"
+        }, 
+        "o2": {
+            "index": 6, 
+            "op_index": 2, 
+            "pnum": 1, 
+            "target": "P0", 
+            "type": "F"
+        }, 
+        "o3": {
+            "index": 0, 
+            "op_index": 3, 
+            "pnum": 1, 
+            "target": "P0", 
+            "type": "F"
+        }, 
+        "o4": {
+            "op_index": 4, 
+            "pnum": 1, 
+            "size": 304, 
+            "type": "M"
+        }, 
+        "o5": {
+            "index": 1, 
+            "op_index": 5, 
+            "pnum": 1, 
+            "target": "P0", 
+            "type": "F"
+        }
+    }, 
+    "P2": {
+        "num_operations": 7, 
+        "o0": {
+            "op_index": 0, 
+            "pnum": 2, 
+            "size": 304, 
+            "type": "M"
+        }, 
+        "o1": {
+            "op_index": 1, 
+            "pnum": 2, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o2": {
+            "op_index": 2, 
+            "pnum": 2, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o3": {
+            "op_index": 3, 
+            "pnum": 2, 
+            "size": 304, 
+            "type": "M"
+        }, 
+        "o4": {
+            "op_index": 4, 
+            "pnum": 2, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o5": {
+            "op_index": 5, 
+            "pnum": 2, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o6": {
+            "op_index": 6, 
+            "pnum": 2, 
+            "size": 320, 
+            "type": "M"
+        }
+    }, 
+    "P3": {
+        "num_operations": 7, 
+        "o0": {
+            "index": 3, 
+            "op_index": 0, 
+            "pnum": 3, 
+            "target": "P2", 
+            "type": "F"
+        }, 
+        "o1": {
+            "op_index": 1, 
+            "pnum": 3, 
+            "size": 304, 
+            "type": "M"
+        }, 
+        "o2": {
+            "index": 6, 
+            "op_index": 2, 
+            "pnum": 3, 
+            "target": "P2", 
+            "type": "F"
+        }, 
+        "o3": {
+            "op_index": 3, 
+            "pnum": 3, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o4": {
+            "index": 5, 
+            "op_index": 4, 
+            "pnum": 3, 
+            "target": "P2", 
+            "type": "F"
+        }, 
+        "o5": {
+            "op_index": 5, 
+            "pnum": 3, 
+            "size": 336, 
+            "type": "M"
+        }, 
+        "o6": {
+            "index": 1, 
+            "op_index": 6, 
+            "pnum": 3, 
+            "target": "P3", 
+            "type": "F"
+        }
+    }, 
+    "total_primitives": 4
+}

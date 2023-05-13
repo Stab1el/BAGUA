@@ -1,0 +1,303 @@
+{
+    "P0": {
+        "num_operations": 2,
+        "o0": {
+            "index": 0,
+            "op_index": 0,
+            "pnum": 0, 
+            "target": "P4",
+            "type": "F"
+        },
+        "o1": {
+            "op_index": 1,
+            "pnum": 0, 
+            "size": -1,
+            "type": "M"
+        }
+    },
+    "P1": {
+        "num_operations": 3,
+        "o0": {
+            "op_index": 0,
+            "pnum": 1,
+            "size": 8208,
+            "type": "M"
+        },
+        "o1": {
+            "op_index": 1,
+            "pnum": 1,
+            "size": 16,
+            "type": "M"
+        },
+        "o2": {
+            "index": 1,
+            "op_index": 2,
+            "pnum": 1,
+            "target": "P1",
+            "type": "F"
+        }
+    },
+    "P2": {
+        "num_operations": 3,
+        "o0": {
+            "index": 1,
+            "op_index": 0,
+            "pnum": 2,
+            "target": "P0",
+            "type": "F"
+        },
+        "o1": {
+            "op_index": 1,
+            "pnum": 2,
+            "size": -1,
+            "type": "M"
+        },
+       "o2": {
+            "index": 0,
+            "op_index": 2,
+            "pnum": 2,
+            "target": "P1",
+            "type": "F"
+        }
+    },
+    "P3": {
+        "num_operations": 2,
+        "o0": {
+            "index": 1,
+            "op_index": 0,
+            "pnum": 3,
+            "target": "P1",
+            "type": "F"
+        },
+        "o1": {
+            "op_index": 1,
+            "pnum": 3,
+            "size": 8208,
+            "type": "M"
+        }
+    },
+    "P4": {
+      "num_operations": 1,
+      "o0": {
+        "op_index": 0,
+        "pnum": 4,
+        "size": -1,
+        "type": "M"
+      }
+    },
+    "P5": {
+        "num_operations": 5,
+        "o0": {
+            "op_index": 0,
+            "pnum": 5,
+            "size": -1,
+            "type": "M"
+        },
+       "o1": {
+            "op_index": 1,
+            "pnum": 5,
+            "size": 8208,
+            "type": "M"
+        },
+        "o2": {
+            "op_index": 2,
+            "pnum": 5,
+            "size": 8208,
+            "type": "M"
+        },
+        "o3": {
+            "op_index": 3,
+            "pnum": 5,
+            "size": 8208,
+            "type": "M"
+        },
+        "o4": {
+            "op_index": 4,
+            "pnum": 5,
+            "size": 8208,
+            "type": "M"
+        }
+    },
+    "P6": {
+        "num_operations": 7,
+        "o0": {
+            "op_index": 0,
+            "pnum": 6,
+            "size": -1,
+            "type": "M"
+        },
+       "o1": {
+            "op_index": 1,
+            "pnum": 6,
+            "size": 8208,
+            "type": "M"
+        },
+        "o2": {
+            "op_index": 2,
+            "pnum": 6,
+            "size": 8208,
+            "type": "M"
+        },
+        "o3": {
+            "op_index": 3,
+            "pnum": 6,
+            "size": 8208,
+            "type": "M"
+        },
+        "o4": {
+            "op_index": 4,
+            "pnum": 6,
+            "size": 8208,
+            "type": "M"
+        },
+        "o5": {
+            "op_index": 5,
+            "pnum": 6,
+            "size": 8208,
+            "type": "M"
+        },
+        "o6": {
+            "op_index": 6,
+            "index": 1,
+            "pnum": 6,
+            "target": "P6",
+            "type": "F"
+        }
+    },
+    "P7": {
+        "num_operations": 8,
+        "o0": {
+            "op_index": 0,
+            "index": 0,
+            "pnum": 7,
+            "target": "P6",
+            "type": "F"
+        },
+        "o1": {
+            "op_index": 1,
+            "pnum": 7,
+            "size": -1,
+            "type": "M"
+        },
+       "o2": {
+            "op_index": 2,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o3": {
+            "op_index": 3,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o4": {
+            "op_index": 4,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o5": {
+            "op_index": 5,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o6": {
+            "op_index": 6,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o7": {
+            "op_index": 7,
+            "index": 2,
+            "pnum": 7,
+            "target": "P7",
+            "type": "F"
+        }
+    },
+    "P8": {
+        "num_operations": 6,
+        "o0": {
+            "op_index": 0,
+            "index": 0,
+            "pnum": 7,
+            "target": "P5",
+            "type": "F"
+        },
+        "o1": {
+            "op_index": 1,
+            "pnum": 7,
+            "size": -1,
+            "type": "M"
+        },
+       "o2": {
+            "op_index": 2,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o3": {
+            "op_index": 3,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o4": {
+            "op_index": 4,
+            "pnum": 7,
+            "size": 8208,
+            "type": "M"
+        },
+        "o5": {
+            "op_index": 5,
+            "index": 2,
+            "pnum": 8,
+            "target": "P8",
+            "type": "F"
+        }
+    },
+    "P9": {
+        "num_operations": 6,
+        "o0": {
+            "op_index": 0,
+            "pnum": 9,
+            "size": 16,
+            "type": "M"
+        },
+        "o1": {
+            "op_index": 1,
+            "index": 0,
+            "pnum": 9,
+            "target": "P9",
+            "type": "F"
+        },
+       "o2": {
+            "op_index": 2,
+            "pnum": 9,
+            "size": 16,
+            "type": "M"
+        },
+        "o3": {
+            "op_index": 3,
+            "index": 2,
+            "pnum": 9,
+            "target": "P9",
+            "type": "F"
+        },
+        "o4": {
+            "op_index": 4,
+            "pnum": 9,
+            "size": 16,
+            "type": "M"
+        },
+        "o5": {
+            "op_index": 5,
+            "pnum": 9,
+            "size": 8208,
+            "type": "M"
+        }
+    },
+    "total_primitives": 10
+}
