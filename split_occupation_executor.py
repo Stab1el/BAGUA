@@ -8,7 +8,7 @@ from collections import Counter, OrderedDict
 
 
 
-WATCHING_HEAP = 0
+WATCHING_HEAP = 1
 
 
 class SplitOccupy():
@@ -224,6 +224,8 @@ def do_multiple_occupation_by_multiple_steps(init_layout, all_primitives, prims_
     final_solvers = []
     cur_layout  = copy.deepcopy(init_layout)
     finish_solving = False
+    if WATCHING_HEAP:
+        cur_layout.dump_layout()
 
     while not finish_solving:
 
@@ -239,12 +241,12 @@ def do_multiple_occupation_by_multiple_steps(init_layout, all_primitives, prims_
             if WATCHING_HEAP:
                 cur_layout.dump_layout()
 
-            for previous_goal in range(0, target_index):
-                chunk_addr = multiple_targets[previous_goal][0]
-                chunk_size = multiple_targets[previous_goal][1]
-                if not check_if_previous_chunk_merge(chunk_addr, chunk_size, cur_layout):
-                    print "[!]previous chunk merged, break"
-                    return
+            # for previous_goal in range(0, target_index):
+            #     chunk_addr = multiple_targets[previous_goal][0]
+            #     chunk_size = multiple_targets[previous_goal][1]
+            #     if not check_if_previous_chunk_merge(chunk_addr, chunk_size, cur_layout):
+            #         print "[!]previous chunk merged, break"
+            #         return
 
             for each_prim in primitive_time_list:
                 already_solvers.append(each_prim.prim_name)

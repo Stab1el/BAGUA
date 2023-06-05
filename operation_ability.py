@@ -38,12 +38,15 @@ class OperationAbility:
 ################ For free only #####################################################
 
     def __to_merge_chunk(self):
+        previous_chunk = None
+        next_chunk = None
 
         free_chunk_size = self.cur_op.free_chunk_size
         free_chunk_addr = self.cur_op.free_chunk_addr
 
-        previous_chunk = None
-        next_chunk = None
+        if free_chunk_size < MS_START_SIZE:
+            return previous_chunk, next_chunk
+
         self.can_ms_free_lists = self.heap_layout.get_can_ms_free_chunks()
 
 
@@ -168,37 +171,39 @@ class OperationAbility:
         '''
         t_size = 999999
         t_addr = None
-
+        cur_each_size = 999999
         if len(self.get_free_chunks_by_size(m_size)) > 0:
             return None
 
         can_ms_chunks = self.heap_layout.get_can_ms_free_chunks()
 
         for each_size in can_ms_chunks:
+            ## select the best fit chunk for split
+            if each_size > m_size:
+                if each_size < cur_each_size:
+                    cur_each_size = each_size
 
-            if each_size > m_size and t_size > each_size and each_size - m_size >= MIN_CHUNK_SIZE:
-                t_size = each_size
-                fl = can_ms_chunks[each_size]
-                if fl.is_FILO:
-                    t_addr = fl.chunks[-1]
-                elif not fl.is_FILO:
-                    t_addr = fl.chunks[0]
-                # t_addr = can_ms_chunks[each_size][-1]
-                self.last_remainder_bin = [t_size - m_size, t_addr + m_size]
-                break
-
-            elif each_size > m_size and t_size > each_size and each_size - m_size < MIN_CHUNK_SIZE:
-                t_size = each_size
-                fl = can_ms_chunks[each_size]
-                if fl.is_FILO:
-                    t_addr = fl.chunks[-1]
-                elif not fl.is_FILO:
-                    t_addr = fl.chunks[0]
-                # t_addr = can_ms_chunks[each_size][-1]
-                self.last_remainder_bin = None
-                break
-
-        if t_addr is None:
+        ## split and has last remainder chunk
+        if cur_each_size < 999999 and cur_each_size - m_size >= MIN_CHUNK_SIZE:
+            t_size = cur_each_size
+            fl = can_ms_chunks[cur_each_size]
+            if fl.is_FILO:
+                t_addr = fl.chunks[-1]
+            elif not fl.is_FILO:
+                t_addr = fl.chunks[0]
+            self.last_remainder_bin = [t_size - m_size, t_addr + m_size]
+        ## split and no last remainder chunk
+        elif cur_each_size < 999999 and cur_each_size - m_size < MIN_CHUNK_SIZE:
+            t_size = cur_each_size
+            fl = can_ms_chunks[cur_each_size]
+            if fl.is_FILO:
+                t_addr = fl.chunks[-1]
+            elif not fl.is_FILO:
+                t_addr = fl.chunks[0]
+            # t_addr = can_ms_chunks[each_size][-1]
+            self.last_remainder_bin = None
+        ## no suitable chunk for split, then malloc from top chunk
+        if cur_each_size == 999999 or t_addr is None:
             t_size = m_size
             t_addr = self.heap_layout.top_chunk
 
@@ -453,9 +458,23 @@ class OperationAbility:
                         self.cur_op.free_chunk_size = each_size
                         self.cur_op.free_chunk_addr = each_addr
 
-                        delta_free_chunks.append([self.cur_op.free_chunk_size, self.cur_op.free_chunk_addr, 1, 0, 0])
-                        delta_allocated_chunks.append([self.cur_op.free_chunk_size, self.cur_op.free_chunk_addr, -1,
-                                                       self.cur_op.malloc_target, self.cur_op.op_index])
+                        previous_merge_chunk, next_merge_chunk = self.__to_merge_chunk()
+                        merged_chunk = self.get_merged_new_chunk(previous_merge_chunk, next_merge_chunk)
+
+                        if merged_chunk is None:
+                            delta_free_chunks.append([self.cur_op.free_chunk_size, self.cur_op.free_chunk_addr, 1, 0, 0])
+                            delta_allocated_chunks.append([self.cur_op.free_chunk_size, self.cur_op.free_chunk_addr, -1,
+                                                           self.cur_op.malloc_target, self.cur_op.op_index])
+                        else:
+                            delta_free_chunks.append([merged_chunk[0], merged_chunk[1], 1, 0 ,0])
+                            if next_merge_chunk is not None:
+                                delta_free_chunks.append([next_merge_chunk[0], next_merge_chunk[1], -1, 0, 0])
+                            if previous_merge_chunk is not None:
+                                delta_free_chunks.append([previous_merge_chunk[0], previous_merge_chunk[1], -1, 0, 0])
+                            delta_allocated_chunks.append([self.cur_op.free_chunk_size, self.cur_op.free_chunk_addr, -1,
+                                                           self.cur_op.malloc_target, self.cur_op.op_index])
+
+
                         chunks_affect['F'] = delta_free_chunks
                         chunks_affect['T'] = top_chunks
                         chunks_affect['A'] = delta_allocated_chunks
