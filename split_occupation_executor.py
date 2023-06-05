@@ -8,7 +8,7 @@ from collections import Counter, OrderedDict
 
 
 
-WATCHING_HEAP = 1
+WATCHING_HEAP = 0
 
 
 class SplitOccupy():
