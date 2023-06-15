@@ -110,11 +110,13 @@ class SplitOccupy():
                     added_symbol_list['n_' + str(i)] = createVar['n_' + str(i)]
 
                     solver.add(createVar['n_' + str(i)] >= 0)
-                    solver.add(createVar['size_' + str(i)] == createVar['n_' + str(i)] * 16)
+                    solver.add(createVar['size_' + str(i)] == createVar['n_' + str(i)] * 2* SIZE_SZ)
                     solver.add(createVar['size_' + str(i)] <= MAX_CHUNK_SIZE)
+                    solver.add(createVar['size_' + str(i)] > 2* SIZE_SZ)
 
                     sum_symbol += (createVar['size_' + str(i)]) * createVar['time_' + str(i)]
-                elif each_op.op_type == "M" and each_op.malloc_size> 1000:
+
+                elif each_op.op_type == "M" and each_op.malloc_size > 2* SIZE_SZ:
                     sum_symbol += (each_op.malloc_size + 2* SIZE_SZ) * createVar['time_' + str(i)]
         solver.add(sum_symbol == self.target_hole_size)
 
@@ -131,6 +133,7 @@ class SplitOccupy():
 
                 if 'time_'+str(i) in added_symbol_list and res[createVar['time_' + str(i)]].as_long() > 0:
                     times_list["P" + str(i)] = res[createVar['time_' + str(i)]].as_long()
+
                     if 'size_'+str(i) in added_symbol_list and res[createVar['size_' + str(i)]].as_long() > 0:
                         sizes_list["P"+str(i)] = res[createVar['size_' + str(i)]].as_long()
 
@@ -152,12 +155,16 @@ class SplitOccupy():
 
                     for each_op in select_prim.operation_list:
                         if each_op.op_type == "M" and each_op.malloc_size == -1:
+                            if each_prim_name not in sizes_list:
+                                return None
                             each_op.malloc_size = sizes_list[each_prim_name] -  2 * SIZE_SZ
         return primitive_timeline
 
 
 
     def execute_primitive_list(self, primitive_list):
+        if primitive_list is None:
+            return None, None
         cur_layout = copy.deepcopy(self.cur_layout)
         index = 0
         for each_prim in primitive_list:
@@ -182,6 +189,7 @@ class SplitOccupy():
             self.select_op_list_for_split_in_primitives()
             primitive_times, malloc_sizes =  self.generate_and_solve_equation()
 
+            ## if can not find any solvers for the ILP constraints.
             if primitive_times is None:
                 print "error , no more solvers"
                 return None, None
@@ -192,8 +200,8 @@ class SplitOccupy():
 
             if primitive_time_list is None:
                 print "re-solve the equation"
-                already_solver = self.add_already_unsat_solvers_to_equation(primitive_times, malloc_sizes)
-                self.already_unsat_solvers.extend(already_solver)
+                unsat_solver = self.add_already_unsat_solvers_to_equation(primitive_times, malloc_sizes)
+                self.already_unsat_solvers.extend(unsat_solver)
                 continue
             else:
                 solved = True
@@ -201,15 +209,14 @@ class SplitOccupy():
         return primitive_time_list, new_layout
 
     def add_already_unsat_solvers_to_equation(self, primitive_times, malloc_sizes):
-        already_solvers = []
+        unsat_solvers = []
 
-        for each_malloc_size in malloc_sizes:
-            if malloc_sizes[each_malloc_size] > 0:
-                index = each_malloc_size[-1]
-                sizes = "size_"+index
-                already_solvers.append([sizes, malloc_sizes[each_malloc_size]])
+        for each_prim_time in primitive_times:
+            index = each_prim_time[-1]
+            unsat_time = "time_"+index
+            unsat_solvers.append([unsat_time, primitive_times[each_prim_time]])
 
-        return already_solvers
+        return unsat_solvers
 
 
 
